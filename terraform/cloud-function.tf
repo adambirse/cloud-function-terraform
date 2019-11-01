@@ -21,8 +21,8 @@ resource "google_storage_bucket_object" "app_zip" {
 }
 
 resource "google_cloudfunctions_function" "app_function" {
-  name = "App-function"
-  description = "Scheduled App Function"
+  name = "hello"
+  description = "Hello Function"
   available_memory_mb = 256
   source_archive_bucket = google_storage_bucket.app_bucket.name
   source_archive_object = google_storage_bucket_object.app_zip.name
