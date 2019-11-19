@@ -35,6 +35,16 @@ An example of deploying a hello world GCP cloud function with terraform.
 --member serviceAccount:<SERVICE_ACCOUNT_EMAIL> \
 --role roles/iam.serviceAccountUser`
 
+- `gcloud projects add-iam-policy-binding cloud-functions-terraform \
+--member serviceAccount:<SERVICE_ACCOUNT_EMAIL> \
+--role roles/cloudsql.admin`
+
+TODO - Not sure this one is needed
+- `gcloud projects add-iam-policy-binding cloud-functions-terraform \
+--member serviceAccount:<SERVICE_ACCOUNT_EMAIL> \
+--role roles/servicenetworking.networksAdmin`
+
+
 ## Create and download service key
 
 - `gcloud iam service-accounts keys create ~/key.json \
