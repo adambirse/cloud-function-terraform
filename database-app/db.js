@@ -2,7 +2,7 @@ const mysql = require('promise-mysql');
 
 let pool;
 
-const createPool = async () => {
+function getConfig() {
 
     const socketPath = `/cloudsql/${process.env.CLOUD_SQL_CONNECTION_NAME}`;
     console.log(socketPath);
@@ -11,19 +11,38 @@ const createPool = async () => {
     console.log(process.env.DB_USER);
     console.log(process.env.DB_NAME);
 
-    pool = await mysql.createPool({
-        user: process.env.DB_USER,
-        password: process.env.DB_PASS,
-        database: process.env.DB_NAME,
-        // host: process.env.DB_HOST, //use for serverless vpn connections (TODO)
-        // If connecting via unix domain socket, specify the path
-        socketPath: socketPath,
-        connectionLimit: 5,
-        connectTimeout: 10000, // 10 seconds
-        acquireTimeout: 10000, // 10 seconds
-        waitForConnections: true, // Default: true
-        queueLimit: 0, // Default: 0
-    });
+    if (process.env.NODE_ENV === "production") {
+        return {
+            user: process.env.DB_USER || 'test',
+            password: process.env.DB_PASS || 'test',
+            database: process.env.DB_NAME || 'cloud-functions',
+            socketPath: socketPath,
+            connectionLimit: 5,
+            connectTimeout: 10000, // 10 seconds
+            acquireTimeout: 10000, // 10 seconds
+            waitForConnections: true, // Default: true
+            queueLimit: 0, // Default: 0
+        };
+    } else {
+        return {
+            user: process.env.DB_USER || 'root',
+            password: process.env.DB_PASS || 'password',
+            database: process.env.DB_NAME || 'cloud-functions',
+            host: process.env.DB_HOST || 'localhost',
+            port: process.env.DB_PORT || 3310,
+            connectionLimit: 5,
+            connectTimeout: 10000, // 10 seconds
+            acquireTimeout: 10000, // 10 seconds
+            waitForConnections: true, // Default: true
+            queueLimit: 0, // Default: 0
+        };
+    }
+}
+
+const createPool = async () => {
+
+
+    pool = await mysql.createPool(getConfig());
 };
 
 const ensureSchema = async () => {
