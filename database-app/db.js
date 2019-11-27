@@ -16,6 +16,7 @@ function getConfig() {
             user: process.env.DB_USER || 'test',
             password: process.env.DB_PASS || 'test',
             database: process.env.DB_NAME || 'cloud-functions',
+            // host: process.env.DB_HOST,
             socketPath: socketPath,
             connectionLimit: 5,
             connectTimeout: 10000, // 10 seconds
