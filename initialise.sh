@@ -38,18 +38,6 @@ gcloud projects add-iam-policy-binding $1 \
 --member serviceAccount:${email} \
 --role roles/cloudsql.admin
 
-#gcloud projects add-iam-policy-binding $1 \
-#--member serviceAccount:${email} \
-#--role roles/vpcaccess.admin
-#
-#gcloud projects add-iam-policy-binding $1 \
-#--member serviceAccount:${email} \
-#--role roles/servicenetworking.networksAdmin
-#
-#gcloud projects add-iam-policy-binding $1 \
-#--member serviceAccount:${email} \
-#--role roles/viewer
-
 echo "Creating and downloading service key"
 
 gcloud iam service-accounts keys create ~/key.json \

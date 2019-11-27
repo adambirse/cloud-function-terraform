@@ -24,3 +24,7 @@ URL for functions are output from `terraform apply`
 Do this to save money!
 
 `terraform destroy`
+
+# TODO
+
+Currently the sql database is accessible via public IP, change to private access.
